@@ -1,23 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import { GameField } from './components/GameField';
+import { InputLine } from './components/InputLine';
 
 function App() {
+  const [word, setWord] = useState(['', '', '', '', '', '']);
+
+  const [solution, setSolution] = useState('salon');
+
+  //compare the submitted word against the solution letter by letter
+  //
+
+  const onSubmit = (event, inputRef, wordNumber) => {
+    event.preventDefault();
+    if (wordNumber < 0) alert('You are dumb!');
+    word[wordNumber] = inputRef.current.value;
+    setWord([...word]);
+    inputRef.current.value = '';
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <InputLine onSubmit={onSubmit} word={word} />
+      <GameField word={word} />
     </div>
   );
 }
