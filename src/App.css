@@ -50,6 +50,14 @@
   align-items: center;
   justify-content: center;
 }
+
+.letterTile.part {
+  background-color: rgb(209, 209, 69);
+}
+
+.letterTile.full {
+  background-color: green;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
