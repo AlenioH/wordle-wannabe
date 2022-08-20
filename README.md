@@ -1,6 +1,10 @@
 # About the app
 
-This app is a wannabe wordle game. Build using React. Random words are a courtesy of [Random Words API](http://random-word-api.herokuapp.com/home)
+This app is a wannabe wordle game. Build using React. 
+
+Random words are a courtesy of [Random Words API](http://random-word-api.herokuapp.com/home).
+
+Reality check (aka checking if a word even exists) is a courtesy of [Free Dictionary API](https://dictionaryapi.dev/).
 
 # Getting Started with Create React App
 
