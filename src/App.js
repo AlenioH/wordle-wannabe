@@ -4,18 +4,30 @@ import { GameField } from './components/GameField';
 import { InputLine } from './components/InputLine';
 
 function App() {
-  const [word, setWord] = useState(['', '', '', '', '', '']);
 
-  const [solution, setSolution] = useState('cover');
+  const [solution, setSolution] = useState('');
+  const [guess, setGuesses] = useState(['', '', '', '', '']);
+
 
   const [result, setResult] = useState([[], [], [], [], [], []]);
-  console.log({ result });
 
-  const onSubmit = (event, inputRef, wordNumber) => {
+  const fetchWord = () => {
+    setSolution('');
+    setGuesses(['', '', '', '', '']);
+    clearField()
+    fetch("https://random-word-api.herokuapp.com/word?length=5")
+    .then((data) => data.json()).then((word) => setSolution(word[0]))
+  }
+
+  const clearField = () => {
+
+  }
+
+  const onSubmit = (event, inputRef, guessNumber) => {
     event.preventDefault();
-    if (wordNumber < 0) alert('You are dumb!');
-    word[wordNumber] = inputRef.current.value;
-    setWord([...word]);
+    if (guessNumber < 0) alert('Try another time!');
+    guess[guessNumber] = inputRef.current.value;
+    setGuesses([...guess]);
     const solutionDeconstructed = solution.split('');
     const wordDeconstructed = inputRef.current.value.split('');
 
@@ -23,28 +35,32 @@ function App() {
     wordDeconstructed.forEach((item1, index1) => {
       solutionDeconstructed.forEach((item2, index2) => {
         if (item1 === item2 && index1 === index2) {
-          result[wordNumber].push({ [item1]: 'full' });
+          result[guessNumber].push({ [item1]: 'full' });
         } else if (item1 === item2 && index1 !== index2) {
-          result[wordNumber].push({ [item1]: 'part' });
+          result[guessNumber].push({ [item1]: 'part' });
         } else {
-          result[wordNumber].push(0);
+          result[guessNumber].push(0);
         }
       });
     });
 
     setResult([...result]);
 
-    inputRef.current.value = '';
-
     if (inputRef.current.value === solution) {
       alert('CORRECT');
     }
+    inputRef.current.value = '';
   };
 
   return (
     <div className="App">
-      <InputLine onSubmit={onSubmit} word={word} />
-      <GameField word={word} result={result} />
+      <button onClick={fetchWord}>Start new game</button>
+      {solution && (
+        <>
+          <InputLine onSubmit={onSubmit} guess={guess} />
+          <GameField guess={guess} result={result} />
+        </>
+      )}
     </div>
   );
 }

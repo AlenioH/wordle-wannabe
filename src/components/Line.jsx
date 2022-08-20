@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const LineOne = ({ word, result, wordNumber }) => {
+export const Line = ({ word, result, wordNumber }) => {
   const wordDeconstructed = word.split('');
   return (
     <React.Fragment>

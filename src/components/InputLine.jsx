@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
 
-export const InputLine = ({ onSubmit, word }) => {
+export const InputLine = ({ onSubmit, guess }) => {
   const isEmptyString = (element) => element.length === 0;
-  const indexOfEmpty = word.findIndex(isEmptyString);
+  // finding which line this should be inserted into
+  const indexOfEmpty = guess.findIndex(isEmptyString);
   const inputRef = useRef();
   return (
     <React.Fragment>
