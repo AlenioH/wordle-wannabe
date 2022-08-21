@@ -41,7 +41,7 @@ function App() {
       if (window.confirm("Want to start a new game?")) fetchWord();
       return;
     }
-    let value = inputRef.current.value;
+    let value = inputRef.current.value.toLowerCase();
 
     // check if the guess is an actual English word
     const word = await checkWord(value);
