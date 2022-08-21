@@ -10,68 +10,97 @@ function App() {
   const [guess, setGuesses] = useState(['', '', '', '', '']);
   const [result, setResult] = useState([[], [], [], [], [], []]);
 
-  const fetchWord = () => {
+  const fetchWord = async () => {
     setSolution('');
     setGuesses(['', '', '', '', '']);
     setCorrect(false);
-    fetch("https://random-word-api.herokuapp.com/word?length=5")
-    .then((response) => response.json()).then((word) => setSolution(word[0]))
+    const word = await fetch("https://random-word-api.herokuapp.com/word?length=5")
+    const word_json = await word.json()
+    // because these are different APIs and different dictionaries, unfortunately it can happen that the random word suggested by the one doesn't exist in the other, hence the check
+    const isRealWord = await checkWord(word_json[0]);
+    if (isRealWord) setSolution(word_json[0]);
+    else fetchWord();
   }
 
-  const onSubmit = (event, inputRef, attemptsLeft) => {
+
+  const checkWord = (word) => {
+    return fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
+    .then((response) => {
+        if (response.ok) return true;
+        else {
+          return false;
+        }
+      }
+    )
+    .catch((err) => console.error(err));
+  }
+
+  const onSubmit = async (event, inputRef, attempt) => {
     event.preventDefault();
-    if (correct) {
+    if (correct || attempt < 0) {
       if (window.confirm("Want to start a new game?")) fetchWord();
       return;
     }
     let value = inputRef.current.value;
 
-    if (attemptsLeft < 0) alert('Try another time!');
     // check if the guess is an actual English word
-    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${value}`)
-    .then((response) => {
-        if (response.ok)  return response.json()
-        else {
-          alert('This does not seem to be a real word...');
-        }
-      }
-    ).then((word) => {
-      if (word) {
-        //check if the word is already on the guess list
-        if (guess.includes(value)) {
-          alert('You already tried this one!');
-          inputRef.current.value = '';
-          return;
-        }
-        guess[attemptsLeft] = value;
-        setGuesses([...guess]);
-        const solutionDeconstructed = solution.split('');
-        const wordDeconstructed = value.split('');
+    const word = await checkWord(value);
 
-        //need to replace existing ones with the new ones
-        wordDeconstructed.forEach((item1, index1) => {
-          solutionDeconstructed.forEach((item2, index2) => {
-            if (item1 === item2 && index1 === index2) {
-              result[attemptsLeft].push({ [item1]: 'full' });
-            } else if (item1 === item2 && index1 !== index2) {
-              result[attemptsLeft].push({ [item1]: 'part' });
-            } else {
-              result[attemptsLeft].push(0);
-            }
-          });
-        });
-
-        setResult([...result]);
-
-        if (value === solution) {
-          alert('CORRECT');
-          setCorrect(true);
-        }
+    if (word) {
+      // check if the word is already on the guess list
+      if (guess.includes(value)) {
+        alert('You already tried this one!');
+        inputRef.current.value = '';
+        return;
       }
 
-      inputRef.current.value = '';
-    })
-    .catch((err) => console.error(err))
+
+      guess[attempt] = value;
+      setGuesses([...guess]);
+      const solutionDeconstructed = solution.split('');
+      const guessDeconstructed = value.split('');
+
+      guessDeconstructed.reduce((prev, cur, curIndex) => {
+        return solutionDeconstructed.forEach((item, index) => {
+          if (cur === item && curIndex === index) {
+            console.log("1:", cur, item, curIndex, index);
+
+            result[attempt].push({ [curIndex]: 'full' });
+          }
+
+          if (cur === item && curIndex !== index) {
+            console.log("2:", cur, item, curIndex, index);
+            result[attempt].push({ [curIndex]: 'part' });
+          }
+
+          //TODO:
+          // full should overwrite part in case there's only one of that letter in the solution word and this has been found
+          // let onlyOneInSolution = result[attempt].filter((i) => i === item && i === cur).length === 1 ? true : false;
+          // let multipleInGuess = result[attempt].filter((i) => i === item && i === cur).length > 1 ? true : false;
+
+          // let correctOneHasBeenFound = cur === item && cur === index
+          // if (onlyOneInSolution && multipleInGuess && correctOneHasBeenFound) {
+          //   //full overwrites all of them
+          // }
+
+        } )
+      }, [])
+
+      setResult([...result]);
+      if (value !== solution && attempt === 4) {
+        setTimeout(() => alert(`Game over! The solution is: ${solution}. Next time you will get it!`), 500);
+      }
+
+      if (value === solution) {
+        setTimeout(() => alert('CORRECT'), 500);
+        setCorrect(true);
+      }
+
+    } else {
+      alert('This does not seem to be a real word...');
+    }
+
+    inputRef.current.value = '';
 
   };
 
