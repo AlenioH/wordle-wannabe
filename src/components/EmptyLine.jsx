@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const EmptyLine = () => {
-  const emptyOne = [' ', ' ', ' ', ' ', ' '];
+  const emptyOne = Array(5).fill('');
 
   return (
     <div style={{ display: 'flex', marginTop: '1rem' }}>
