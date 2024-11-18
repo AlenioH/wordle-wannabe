@@ -1,12 +1,12 @@
 import React from 'react';
 
-export const Line = ({ word, result, guessNumber }) => {
+export const Line = ({ word, result, guessNumber: attempt }) => {
   const wordDeconstructed = word.split('');
   return (
     <React.Fragment>
       {wordDeconstructed.map((item, index) => {
-        const find = result[guessNumber]
-        ?.find((letter) => {
+        const find = result[attempt]
+                ?.find((letter) => {
             if (letter[index]) {
                 return letter[index];
               } else {

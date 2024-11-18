@@ -7,12 +7,12 @@ function App() {
 
   const [solution, setSolution] = useState('');
   const [correct, setCorrect] = useState(false);
-  const [guess, setGuesses] = useState(['', '', '', '', '']);
-  const [result, setResult] = useState([[], [], [], [], [], []]);
+  const [guess, setGuesses] = useState([]);
+  const [result, setResult] = useState([]);
 
   const fetchWord = async () => {
     setSolution('');
-    setGuesses(['', '', '', '', '']);
+    setGuesses(Array(5).fill(''));
     setCorrect(false);
     const word = await fetch("https://random-word-api.herokuapp.com/word?length=5")
     const word_json = await word.json()
@@ -62,6 +62,7 @@ function App() {
 
       guessDeconstructed.forEach((i, index) => {
         if (solutionDeconstructed.includes(i) ) {
+          result[attempt] = result[attempt] || [];
           if (solutionDeconstructed[index] === i) {
             result[attempt].push({ [index]: 'full' });
           }
