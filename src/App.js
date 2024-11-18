@@ -65,10 +65,11 @@ function App() {
           result[attempt] = result[attempt] || [];
           if (solutionDeconstructed[index] === i) {
             result[attempt].push({ [index]: 'full' });
-          }
+            return;
+          };
           result[attempt].push({ [index]: 'part' });
         }
-      })
+      });
 
       setResult([...result]);
       if (value !== solution && attempt === 4) {
