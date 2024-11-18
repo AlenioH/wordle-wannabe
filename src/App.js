@@ -60,31 +60,14 @@ function App() {
       const solutionDeconstructed = solution.split('');
       const guessDeconstructed = value.split('');
 
-      guessDeconstructed.reduce((prev, cur, curIndex) => {
-        return solutionDeconstructed.forEach((item, index) => {
-          if (cur === item && curIndex === index) {
-            console.log("1:", cur, item, curIndex, index);
-
-            result[attempt].push({ [curIndex]: 'full' });
+      guessDeconstructed.forEach((i, index) => {
+        if (solutionDeconstructed.includes(i) ) {
+          if (solutionDeconstructed[index] === i) {
+            result[attempt].push({ [index]: 'full' });
           }
-
-          if (cur === item && curIndex !== index) {
-            console.log("2:", cur, item, curIndex, index);
-            result[attempt].push({ [curIndex]: 'part' });
-          }
-
-          //TODO:
-          // full should overwrite part in case there's only one of that letter in the solution word and this has been found
-          // let onlyOneInSolution = result[attempt].filter((i) => i === item && i === cur).length === 1 ? true : false;
-          // let multipleInGuess = result[attempt].filter((i) => i === item && i === cur).length > 1 ? true : false;
-
-          // let correctOneHasBeenFound = cur === item && cur === index
-          // if (onlyOneInSolution && multipleInGuess && correctOneHasBeenFound) {
-          //   //full overwrites all of them
-          // }
-
-        } )
-      }, [])
+          result[attempt].push({ [index]: 'part' });
+        }
+      })
 
       setResult([...result]);
       if (value !== solution && attempt === 4) {
