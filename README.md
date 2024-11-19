@@ -14,7 +14,7 @@ This app is a lightweight take on the Wordle game, built using **React**. It cha
 ## Demo
 
 You can check out the live version of the app deployed on **Netlify**:  
-[Wordle Wannabe App - Live Demo](#scintillating-froyo-faa3f7.netlify.app/)
+[Wordle Wannabe App - Live Demo](https://scintillating-froyo-faa3f7.netlify.app/)
 
 ---
 
