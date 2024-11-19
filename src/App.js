@@ -8,7 +8,7 @@ function App() {
   const [solution, setSolution] = useState('');
   const [correct, setCorrect] = useState(false);
   const [guess, setGuesses] = useState([]);
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState(Array.from({ length: 5 }, () => []));
 
   const fetchWord = async () => {
     setSolution('');
@@ -59,15 +59,23 @@ function App() {
       setGuesses([...guess]);
       const solutionDeconstructed = solution.split('');
       const guessDeconstructed = value.split('');
+      const remainingSolution = [...solutionDeconstructed];
 
-      guessDeconstructed.forEach((i, index) => {
-        if (solutionDeconstructed.includes(i) ) {
-          result[attempt] = result[attempt] || [];
-          if (solutionDeconstructed[index] === i) {
-            result[attempt].push({ [index]: 'full' });
-            return;
-          };
+      guessDeconstructed.forEach((letter, index) => {
+        //check for correct matches
+        if (remainingSolution[index] === letter) {
+          result[attempt].push({ [index]: 'full' });
+          remainingSolution[index] = null; // mark as used
+        }
+      });
+
+      // check for partial matches
+      guessDeconstructed.forEach((letter, index) => {
+        if (result[attempt].some((res) => res[index])) return; // skip already matched letters
+        const matchIndex = remainingSolution.indexOf(letter);
+        if (matchIndex !== -1) {
           result[attempt].push({ [index]: 'part' });
+          remainingSolution[matchIndex] = null; // mark as used
         }
       });
 
