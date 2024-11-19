@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Line = ({ word, result, guessNumber: attempt }) => {
+export const Line = ({ word, result, attempt }) => {
   const wordDeconstructed = word.split('');
   return (
     <React.Fragment>
