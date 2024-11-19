@@ -4,7 +4,7 @@ export const EmptyLine = () => {
   const emptyOne = Array(5).fill('');
 
   return (
-    <div style={{ display: 'flex', marginTop: '1rem' }}>
+    <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
       {emptyOne.map((item, index) => {
         return (
           <div key={index} className="letterTile">

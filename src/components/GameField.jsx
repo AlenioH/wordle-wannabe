@@ -8,7 +8,7 @@ export const GameField = ({ guess, result }) => {
       <div className="fieldLine">
         {guess.map((item, index) => {
           return item.length ? (
-            <div key={item} style={{ display: 'flex', marginTop: '1rem' }}>
+            <div key={item} style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
               <Line word={item} result={result} attempt={index} />{' '}
             </div>
           ) : (

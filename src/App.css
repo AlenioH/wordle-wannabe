@@ -3,8 +3,10 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
-  background-color: rgb(70, 63, 63);
+  min-height: 100%;
+  background: linear-gradient(135deg, #1a1a1d, #333333);
+  color: #f0f0f0;
+  font-family: 'Poppins', sans-serif;
 }
 
 .App {
@@ -13,53 +15,100 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
+}
+
+.form {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
 .inputLine {
   height: 2rem;
-  border-radius: 0.3rem;
-  padding: 0.3rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  width: 80%;
+  border: 1px solid #cccccc;
+  font-size: 1rem;
+  background-color: #444;
+  color: #fff;
 }
 
 .field {
-  border: 1px solid black;
-  border-radius: 0.3rem;
+  border: 2px solid #444;
+  border-radius: 1rem;
   padding: 1rem;
-  width: 80vh;
-  margin-top: 1rem;
+  background-color: #222;
+  width: 90vw;
+  max-width: 500px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .fieldLine {
   display: flex;
-  flex-direction: column;
-  text-transform: uppercase;
   justify-content: center;
-  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-direction: column;
 }
 
 .letterTile {
-  background-color: rgb(95, 93, 93);
-  padding: 0.3rem;
-  border: 1px solid black;
-  width: 2rem;
-  height: 2rem;
-  color: white;
+  background-color: #555;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid #333;
+  width: 3rem;
+  height: 3rem;
+  color: #fff;
   font-weight: bold;
-  margin-right: 0.5rem;
+  font-size: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.letterTile:hover {
+  transform: scale(1.1);
 }
 
 .letterTile.part {
-  background-color: rgb(209, 209, 69);
+  background-color: #f1c40f;
+  border-color: #d4ac0d;
 }
 
 .letterTile.full {
-  background-color: green;
+  background-color: #27ae60;
+  border-color: #1e8449;
 }
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+
+button {
+  padding: 0.7rem 1.2rem;
+  background-color: #444;
+  color: #f0f0f0;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #666;
+}
+
+@media screen and (max-width: 768px) {
+  .field {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .letterTile {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.2rem;
   }
 }
