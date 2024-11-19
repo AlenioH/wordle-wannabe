@@ -27,23 +27,27 @@ You can check out the live version of the app deployed on **Netlify**:
 ### Steps
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/wordle-wannabe.git
-   cd wordle-wannabe
-  ```
+      git clone https://github.com/yourusername/wordle-wannabe.git
+      cd wordle-wannabe
+  
+  
 2. **Install dependencies**
+
    ```bash
    npm install
-    ```
+   
+   
 3. **Start the development server**
    ```bash
-   npm start
-    ```
+      npm star
+   
+
 This will run the app in development mode. Open http://localhost:3000 in your browser to view it.
 
 4. **Build for production**
    ```bash
    npm run build
-    ```
+    
 This creates an optimized build of the app in the build/ directory.
 
 ---
